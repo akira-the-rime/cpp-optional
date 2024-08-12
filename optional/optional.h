@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include <utility>
 
-class BadOptionalAccess : public std::exception {
+class BadOptionalAccess final : public std::exception {
 public:
     using exception::exception;
 

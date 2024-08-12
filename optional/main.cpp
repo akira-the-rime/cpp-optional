@@ -3,26 +3,31 @@
 #include <cassert>
 #include <memory>
 
-struct C {
+struct C final {
     C() noexcept {
         ++def_ctor;
     }
+
     C(const C& /*other*/) noexcept {
         ++copy_ctor;
     }
+
     C(C&& /*other*/) noexcept {
         ++move_ctor;
     }
+
     C& operator=(const C& other) noexcept {
         if (this != &other) {
             ++copy_assign;
         }
         return *this;
     }
+
     C& operator=(C&& /*other*/) noexcept {
         ++move_assign;
         return *this;
     }
+
     ~C() {
         ++dtor;
     }
@@ -217,12 +222,12 @@ void TestReset() {
 }
 
 void TestEmplace() {
-    struct S {
+    struct S final {
         S(int i, std::unique_ptr<int>&& p)
             : i(i)
-            , p(std::move(p))  //
-        {
+            , p(std::move(p)) {
         }
+
         int i;
         std::unique_ptr<int> p;
     };
